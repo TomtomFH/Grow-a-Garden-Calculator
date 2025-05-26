@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mutation Multiplier Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #2d2d2d;
+      color: #ffffff;
+      padding: 20px;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Mutation Multiplier Calculator</h2>
+
+  <div class="section">
+    <strong>Growth Mutation:</strong>
+    <label><input type="radio" name="growth" value="1" checked /> Default (adds +1)</label>
+    <label><input type="radio" name="growth" value="20" /> Gold (20×)</label>
+    <label><input type="radio" name="growth" value="50" /> Rainbow (50×)</label>
+  </div>
+
+  <div class="section">
+    <strong>Select Mutations:</strong>
+    <label><input type="checkbox" value="1" /> Wet (+1)</label>
+    <label><input type="checkbox" value="1" /> Chilled (+1)</label>
+    <label><input type="checkbox" value="1" /> Chocolate (+1)</label>
+    <label><input type="checkbox" value="1" /> Moonlit (+1)</label>
+    <label><input type="checkbox" value="3" /> Bloodlit (+3)</label>
+    <label><input type="checkbox" value="4" /> Plasma (+4)</label>
+    <label><input type="checkbox" value="9" /> Frozen (+9)</label>
+    <label><input type="checkbox" value="24" /> Zombified (+24)</label>
+    <label><input type="checkbox" value="99" /> Shocked (+99)</label>
+    <label><input type="checkbox" value="119" /> Celestial (+119)</label>
+    <label><input type="checkbox" value="124" /> Disco (+124)</label>
+  </div>
+
+  <h3>Multiplier: <span id="result">1</span>x</h3>
+
+  <script>
+    function calculate() {
+      let growthValue = 1;
+      let isDefaultGrowth = false;
+
+      document.querySelectorAll('input[name="growth"]').forEach(radio => {
+        if (radio.checked) {
+          growthValue = parseFloat(radio.value);
+          if (radio.value === "1") {
+            isDefaultGrowth = true;
+          }
+        }
+      });
+
+      let mutationTotal = 0;
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        if (cb.checked) {
+          mutationTotal += parseFloat(cb.value);
+        }
+      });
+
+      if (isDefaultGrowth) {
+        mutationTotal += 1;
+      }
+
+      const multiplier = 1 * growthValue * mutationTotal;
+      document.getElementById("result").textContent = multiplier.toLocaleString();
+    }
+
+    document.querySelectorAll('input[type="checkbox"], input[name="growth"]').forEach(input => {
+      input.addEventListener('change', calculate);
+    });
+
+    calculate();
+  </script>
+</body>
+</html>
